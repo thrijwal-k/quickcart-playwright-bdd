@@ -7,10 +7,11 @@ pipelines for **Jenkins** and **GitHub Actions**.
 
 | | |
 |---|---|
-| UI scenarios (Gherkin, Chromium) | 21 across 4 features: sign-in, products, cart, checkout |
+| UI scenarios (Gherkin) | 21 across 4 features: sign-in, products, cart, checkout |
+| Cross-browser | Every UI scenario runs on Chromium, Firefox and WebKit (Safari's engine): 63 UI runs |
 | API tests | 15: contract, status codes, validation rules, totals |
 | Smoke pack (`@smoke`) | 5 critical journeys |
-| Stability | 108 / 108 passed over 3 repeated runs, no retries |
+| Stability | 108 / 108 passed over 3 repeated runs on Chromium, no retries |
 
 ## What is tested
 
@@ -34,7 +35,7 @@ tests/
   pages/*.ts            Page Objects - all locators and page actions live here
   fixtures.ts           Injects Page Objects into steps as Playwright fixtures
   api/*.spec.ts         API tests with Playwright's request context
-playwright.config.ts    Projects (ui-chromium, api), reporters (list, HTML, JUnit), retries,
+playwright.config.ts    Projects (ui-chromium, ui-firefox, ui-webkit, api), reporters (list, HTML, JUnit), retries,
                         trace / screenshot / video on failure, starts the app and API automatically
 Jenkinsfile             Declarative pipeline in the official Playwright Docker image, JUnit + HTML artefacts
 .github/workflows/      Same pipeline on GitHub Actions
@@ -52,8 +53,9 @@ Design choices:
 
 ```bash
 npm ci
-npx playwright install chromium
-npm test             # all API + UI tests (starts the app and API for you)
+npx playwright install chromium firefox webkit
+npm test             # all API + UI tests on all three browsers (starts the app and API for you)
+npm run test:ui      # UI tests on Chromium only
 npm run test:smoke   # @smoke journeys only
 npm run test:api     # API tests only
 npm run report       # open the HTML report

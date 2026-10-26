@@ -29,10 +29,21 @@ export default defineConfig({
     video: 'retain-on-failure',
   },
   projects: [
+    // Cross-browser: the same BDD scenarios run on Chromium, Firefox and WebKit (Safari's engine).
     {
       name: 'ui-chromium',
       testDir: bddTestDir,
       use: { ...devices['Desktop Chrome'], baseURL: APP_URL },
+    },
+    {
+      name: 'ui-firefox',
+      testDir: bddTestDir,
+      use: { ...devices['Desktop Firefox'], baseURL: APP_URL },
+    },
+    {
+      name: 'ui-webkit',
+      testDir: bddTestDir,
+      use: { ...devices['Desktop Safari'], baseURL: APP_URL },
     },
     {
       name: 'api',
