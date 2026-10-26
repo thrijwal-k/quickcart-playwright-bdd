@@ -21,8 +21,10 @@ jobs:
         run: npm run typecheck
       - name: Run API and BDD UI tests
         run: npm test
-        env:
+                env:
           CI: true
+          # Firefox refuses to start in the container unless HOME belongs to the current (root) user.
+          HOME: /root
       - uses: actions/upload-artifact@v4
         if: always()
         with:
