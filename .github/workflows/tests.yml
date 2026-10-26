@@ -9,15 +9,14 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 15
+    # Official Playwright image: browsers and system libraries are preinstalled (same image as the Jenkinsfile).
+    container:
+      image: mcr.microsoft.com/playwright:v1.56.1-noble
+      options: --ipc=host
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
       - run: npm ci
-      - run: npx playwright install --with-deps chromium
       - name: Generate BDD specs and typecheck
         run: npm run typecheck
       - name: Run API and BDD UI tests
