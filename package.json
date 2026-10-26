@@ -1,0 +1,30 @@
+{
+  "name": "quickcart-playwright-bdd",
+  "version": "1.0.0",
+  "private": true,
+  "description": "UI and API test automation framework for a ReactJS shop, using Playwright, Cucumber-style BDD (playwright-bdd) and the Page Object Model.",
+  "type": "module",
+  "scripts": {
+    "api": "node server/api.mjs",
+    "app": "vite --config app/vite.config.mjs",
+    "bddgen": "bddgen",
+    "test": "bddgen && playwright test",
+    "test:smoke": "bddgen && playwright test --grep @smoke",
+    "test:ui": "bddgen && playwright test --project=ui-chromium",
+    "test:api": "playwright test --project=api",
+    "typecheck": "bddgen && tsc --noEmit",
+    "report": "playwright show-report reports/html"
+  },
+  "dependencies": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.56.1",
+    "@types/node": "22.9.0",
+    "@vitejs/plugin-react": "4.3.4",
+    "playwright-bdd": "8.5.1",
+    "typescript": "5.6.3",
+    "vite": "5.4.11"
+  }
+}
